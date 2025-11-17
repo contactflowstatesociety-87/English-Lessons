@@ -1,4 +1,3 @@
-
 import { Student, Instructor, Lesson } from './types';
 
 export const MOCK_STUDENTS: Student[] = [
@@ -50,6 +49,20 @@ export const MOCK_STUDENTS: Student[] = [
     },
     completedLessons: { 'lesson-1': 90 },
     points: 90,
+    timeSpent: [],
+  },
+  {
+    id: 'student-4',
+    role: 'Student',
+    profile: {
+      name: 'Mujde A',
+      age: 0,
+      learningGoals: '',
+      email: 'mujde.nurr@gmail.com',
+      password: 'Cashie010104',
+    },
+    completedLessons: {},
+    points: 0,
     timeSpent: [],
   },
 ];

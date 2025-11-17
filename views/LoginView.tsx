@@ -9,6 +9,48 @@ interface LoginViewProps {
   onNavigateToSignUp: () => void;
 }
 
+interface InstructorLoginModalProps {
+    onSubmit: (e: React.FormEvent) => void;
+    instructorEmail: string;
+    setInstructorEmail: (value: string) => void;
+    instructorPassword: string;
+    setInstructorPassword: (value: string) => void;
+    isInstructorLoading: boolean;
+    onClose: () => void;
+}
+
+const InstructorLoginModal: React.FC<InstructorLoginModalProps> = ({
+    onSubmit,
+    instructorEmail,
+    setInstructorEmail,
+    instructorPassword,
+    setInstructorPassword,
+    isInstructorLoading,
+    onClose
+}) => (
+    <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
+        <div className="w-full max-w-sm p-8 space-y-6 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl relative">
+            <button onClick={onClose} aria-label="Close instructor login" className="absolute top-2 right-4 text-3xl font-light text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white">&times;</button>
+            <div className="text-center">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Instructor Login</h2>
+            </div>
+            <form onSubmit={onSubmit} className="space-y-4">
+                <div>
+                    <label htmlFor="instructor-email" className="block text-sm font-medium text-slate-700 dark:text-slate-300">Email Address</label>
+                    <input id="instructor-email" type="email" value={instructorEmail} onChange={(e) => setInstructorEmail(e.target.value)} required className="mt-1 block w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm" placeholder="instructor@example.com"/>
+                </div>
+                <div>
+                    <label htmlFor="instructor-password"className="block text-sm font-medium text-slate-700 dark:text-slate-300">Password</label>
+                    <input id="instructor-password" type="password" value={instructorPassword} onChange={(e) => setInstructorPassword(e.target.value)} required className="mt-1 block w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm" placeholder="••••••••"/>
+                </div>
+                <Button type="submit" className="w-full" size="lg" isLoading={isInstructorLoading}>
+                    Log In
+                </Button>
+            </form>
+        </div>
+    </div>
+);
+
 const LoginView: React.FC<LoginViewProps> = ({ onStudentLogin, onInstructorLogin, onNavigateToSignUp }) => {
   const [studentEmail, setStudentEmail] = useState('');
   const [studentPassword, setStudentPassword] = useState('');
@@ -37,30 +79,6 @@ const LoginView: React.FC<LoginViewProps> = ({ onStudentLogin, onInstructorLogin
       setIsInstructorLoading(false);
     }
   };
-
-  const InstructorLoginModal = () => (
-    <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
-        <div className="w-full max-w-sm p-8 space-y-6 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl relative">
-            <button onClick={() => setIsInstructorModalOpen(false)} aria-label="Close instructor login" className="absolute top-2 right-4 text-3xl font-light text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white">&times;</button>
-            <div className="text-center">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Instructor Login</h2>
-            </div>
-            <form onSubmit={handleInstructorLoginSubmit} className="space-y-4">
-                <div>
-                    <label htmlFor="instructor-email" className="block text-sm font-medium text-slate-700 dark:text-slate-300">Email Address</label>
-                    <input id="instructor-email" type="email" value={instructorEmail} onChange={(e) => setInstructorEmail(e.target.value)} required className="mt-1 block w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm" placeholder="instructor@example.com"/>
-                </div>
-                <div>
-                    <label htmlFor="instructor-password"className="block text-sm font-medium text-slate-700 dark:text-slate-300">Password</label>
-                    <input id="instructor-password" type="password" value={instructorPassword} onChange={(e) => setInstructorPassword(e.target.value)} required className="mt-1 block w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm" placeholder="••••••••"/>
-                </div>
-                <Button type="submit" className="w-full" size="lg" isLoading={isInstructorLoading}>
-                    Log In
-                </Button>
-            </form>
-        </div>
-    </div>
-  );
 
   return (
     <>
@@ -109,7 +127,17 @@ const LoginView: React.FC<LoginViewProps> = ({ onStudentLogin, onInstructorLogin
         </div>
       </div>
     </div>
-    {isInstructorModalOpen && <InstructorLoginModal />}
+    {isInstructorModalOpen && (
+        <InstructorLoginModal
+            onSubmit={handleInstructorLoginSubmit}
+            instructorEmail={instructorEmail}
+            setInstructorEmail={setInstructorEmail}
+            instructorPassword={instructorPassword}
+            setInstructorPassword={setInstructorPassword}
+            isInstructorLoading={isInstructorLoading}
+            onClose={() => setIsInstructorModalOpen(false)}
+        />
+    )}
     </>
   );
 };
