@@ -1,5 +1,5 @@
 {
-  "name": "Magic English Learning App",
+  "name": "English Learning App",
   "description": "A gamified English curriculum for Turkish speakers, featuring AI-powered lessons, quizzes, progress tracking, and real-time voice conversations with Gemini.",
   "requestFramePermissions": [
     "microphone"

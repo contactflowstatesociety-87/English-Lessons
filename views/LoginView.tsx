@@ -41,7 +41,7 @@ const LoginView: React.FC<LoginViewProps> = ({ onStudentLogin, onInstructorLogin
   const InstructorLoginModal = () => (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
         <div className="w-full max-w-sm p-8 space-y-6 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl relative">
-            <button onClick={() => setIsInstructorModalOpen(false)} className="absolute top-2 right-4 text-3xl font-light text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white">&times;</button>
+            <button onClick={() => setIsInstructorModalOpen(false)} aria-label="Close instructor login" className="absolute top-2 right-4 text-3xl font-light text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white">&times;</button>
             <div className="text-center">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Instructor Login</h2>
             </div>
@@ -70,7 +70,7 @@ const LoginView: React.FC<LoginViewProps> = ({ onStudentLogin, onInstructorLogin
             <div className="flex justify-center">
              <SparkIcon className="w-16 h-16 text-indigo-600" />
             </div>
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mt-2">Magic English</h1>
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mt-2">Learn English</h1>
             <p className="text-gray-600 dark:text-gray-300">Your AI-powered journey to fluency starts here.</p>
         </div>
         

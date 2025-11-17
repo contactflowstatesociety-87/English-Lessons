@@ -28,11 +28,11 @@ const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
   const visibilityClasses = visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5';
 
   return (
-    <div className={`${baseClasses} ${typeClasses[type]} ${visibilityClasses}`}>
+    <div role="alert" className={`${baseClasses} ${typeClasses[type]} ${visibilityClasses}`}>
       <div className="flex items-center">
         <span className="font-semibold">{type === 'success' ? 'Success' : 'Error'}:</span>
         <p className="ml-2">{message}</p>
-        <button onClick={onClose} className="ml-4 text-xl font-bold">&times;</button>
+        <button onClick={onClose} className="ml-4 text-xl font-bold" aria-label="Close notification">&times;</button>
       </div>
     </div>
   );

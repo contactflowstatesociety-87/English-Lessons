@@ -111,10 +111,7 @@ const LessonPlayer: React.FC<{ lesson: Lesson; onComplete: (lessonId: string, sc
         setIsInfoLoading(true);
         setShowInfo(true);
         setInfoSources([]);
-        const prompt = `
-            For a Turkish-speaking English learner, provide a simple definition, common usage tips, and two example sentences (with Turkish translations) for the English ${item.type === 'vocabulary' ? 'word' : 'phrase'} "${term}".
-            Format the response as clean, readable text.
-        `;
+        const prompt = `What is the meaning and common usage of the English ${item.type === 'vocabulary' ? 'word' : 'phrase'} "${term}"? Provide a simple explanation and an example sentence for a Turkish-speaking English learner.`;
         const { text, sources } = await geminiService.generateTextWithSearch(prompt);
         setInfoContent(text);
         setInfoSources(sources);
@@ -301,7 +298,7 @@ const LessonPlayer: React.FC<{ lesson: Lesson; onComplete: (lessonId: string, sc
                     <div className="bg-white dark:bg-slate-800 rounded-lg shadow-xl p-6 w-full max-w-lg max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
                         <div className="flex justify-between items-center mb-4">
                              <h3 className="text-xl font-bold flex items-center"><SparkIcon className="w-6 h-6 mr-2 text-indigo-500" /> More Info</h3>
-                             <button onClick={() => setShowInfo(false)} className="text-2xl">&times;</button>
+                             <button onClick={() => setShowInfo(false)} className="text-2xl" aria-label="Close more info modal">&times;</button>
                         </div>
                         {isInfoLoading ? <LoadingSpinner text="Searching..."/> : (
                             <>

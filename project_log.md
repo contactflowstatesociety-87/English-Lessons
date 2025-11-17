@@ -50,7 +50,8 @@ root.render(
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Magic English Learning App</title>
+    <meta name="description" content="A gamified English curriculum for Turkish speakers, featuring AI-powered lessons, quizzes, progress tracking, and real-time voice conversations with Gemini." />
+    <title>Learn English</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -854,11 +855,11 @@ const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
   const visibilityClasses = visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5';
 
   return (
-    <div className={`${baseClasses} ${typeClasses[type]} ${visibilityClasses}`}>
+    <div role="alert" className={`${baseClasses} ${typeClasses[type]} ${visibilityClasses}`}>
       <div className="flex items-center">
         <span className="font-semibold">{type === 'success' ? 'Success' : 'Error'}:</span>
         <p className="ml-2">{message}</p>
-        <button onClick={onClose} className="ml-4 text-xl font-bold">&times;</button>
+        <button onClick={onClose} className="ml-4 text-xl font-bold" aria-label="Close notification">&times;</button>
       </div>
     </div>
   );
@@ -938,7 +939,7 @@ const LoginView: React.FC<LoginViewProps> = ({ onStudentLogin, onInstructorLogin
   const InstructorLoginModal = () => (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
         <div className="w-full max-w-sm p-8 space-y-6 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl relative">
-            <button onClick={() => setIsInstructorModalOpen(false)} className="absolute top-2 right-4 text-3xl font-light text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white">&times;</button>
+            <button onClick={() => setIsInstructorModalOpen(false)} aria-label="Close instructor login" className="absolute top-2 right-4 text-3xl font-light text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white">&times;</button>
             <div className="text-center">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Instructor Login</h2>
             </div>
@@ -967,7 +968,7 @@ const LoginView: React.FC<LoginViewProps> = ({ onStudentLogin, onInstructorLogin
             <div className="flex justify-center">
              <SparkIcon className="w-16 h-16 text-indigo-600" />
             </div>
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mt-2">Magic English</h1>
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mt-2">Learn English</h1>
             <p className="text-gray-600 dark:text-gray-300">Your AI-powered journey to fluency starts here.</p>
         </div>
         
@@ -1496,10 +1497,7 @@ const LessonPlayer: React.FC<{ lesson: Lesson; onComplete: (lessonId: string, sc
         setIsInfoLoading(true);
         setShowInfo(true);
         setInfoSources([]);
-        const prompt = `
-            For a Turkish-speaking English learner, provide a simple definition, common usage tips, and two example sentences (with Turkish translations) for the English ${item.type === 'vocabulary' ? 'word' : 'phrase'} "${term}".
-            Format the response as clean, readable text.
-        `;
+        const prompt = `What is the meaning and common usage of the English ${item.type === 'vocabulary' ? 'word' : 'phrase'} "${term}"? Provide a simple explanation and an example sentence for a Turkish-speaking English learner.`;
         const { text, sources } = await geminiService.generateTextWithSearch(prompt);
         setInfoContent(text);
         setInfoSources(sources);
@@ -1686,7 +1684,7 @@ const LessonPlayer: React.FC<{ lesson: Lesson; onComplete: (lessonId: string, sc
                     <div className="bg-white dark:bg-slate-800 rounded-lg shadow-xl p-6 w-full max-w-lg max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
                         <div className="flex justify-between items-center mb-4">
                              <h3 className="text-xl font-bold flex items-center"><SparkIcon className="w-6 h-6 mr-2 text-indigo-500" /> More Info</h3>
-                             <button onClick={() => setShowInfo(false)} className="text-2xl">&times;</button>
+                             <button onClick={() => setShowInfo(false)} className="text-2xl" aria-label="Close more info modal">&times;</button>
                         </div>
                         {isInfoLoading ? <LoadingSpinner text="Searching..."/> : (
                             <>
